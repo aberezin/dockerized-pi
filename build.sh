@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -10,5 +10,6 @@ fi
 VERSION=${1:-latest}
 BUILDARGS="--build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg VERSION=$VERSION"
 
-docker build $BUILDARGS -t pi-coding-agent -f "$SCRIPT_DIR/Dockerfile.release" "$SCRIPT_DIR"
+# shellcheck disable=SC2086
+docker buildx build $BUILDARGS -t pi-coding-agent -f "$SCRIPT_DIR/Dockerfile.release" "$SCRIPT_DIR"
 #docker build $BUILDARGS -t pi-coding-agent -f "$SCRIPT_DIR/Dockerfile.git" "$SCRIPT_DIR"
